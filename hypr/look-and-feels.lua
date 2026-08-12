@@ -21,11 +21,16 @@ local colors = require("colors")
 --
 -- Seen on: Hyprland 0.55.4, NVIDIA 595.71.05, RTX 5070 driving HDMI-A-1.
 hl.config({
+
 	cursor = {
 		no_hardware_cursors = false,
 		use_cpu_buffer = true,
 		inactive_timeout = 5,
 		hide_on_key_press = true,
+	},
+	-- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
+	dwindle = {
+		preserve_split = true, -- You probably want this
 	},
 	general = {
 		gaps_in = 0,
@@ -35,7 +40,7 @@ hl.config({
 
 		col = {
 			active_border = colors.accent,
-			inactive_border = "rgba(595959aa)",
+			inactive_border = "#595959aa",
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -46,7 +51,21 @@ hl.config({
 
 		layout = "dwindle",
 	},
-
+	-- Group (tabbed) borders, matching the window borders above
+	group = {
+		col = {
+			border_active = colors.accent,
+			border_inactive = "#595959aa",
+		},
+	},
+	-- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
+	master = {
+		new_status = "master",
+	},
+	-- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
+	scrolling = {
+		fullscreen_on_one_column = true,
+	},
 	decoration = {
 		rounding = 0,
 		rounding_power = 0,
@@ -120,34 +139,3 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 --     border_size = 0,
 --     rounding    = 0,
 -- })
-
--- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
-hl.config({
-	dwindle = {
-		preserve_split = true, -- You probably want this
-	},
-})
-
--- Group (tabbed) borders, matching the window borders above
-hl.config({
-	group = {
-		col = {
-			border_active = colors.accent,
-			border_inactive = "rgba(595959aa)",
-		},
-	},
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
-hl.config({
-	master = {
-		new_status = "master",
-	},
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
-hl.config({
-	scrolling = {
-		fullscreen_on_one_column = true,
-	},
-})

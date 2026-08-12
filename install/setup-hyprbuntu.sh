@@ -16,6 +16,7 @@ set -e
 # THEME_PREF=dark|light|none - whether to set a default Adwaita theme
 # THUNAR_SETUP=true|false - whether to set up thunar
 # TUIGREET_SETUP=true|false - whether to set up tuigreet as the login manager
+# WALKER_SETUP=true|false - whether to build walker + elephant (app launcher)
 # WAYBAR_SETUP=true|false - whether to install (minimal config) waybar as the status bar
 
 BUILD_DIR="$HOME/hyprbuntu"
@@ -30,6 +31,7 @@ SWAYOSD_SETUP=true
 THEME_PREF=dark
 THUNAR_SETUP=false
 TUIGREET_SETUP=false
+WALKER_SETUP=false
 WAYBAR_SETUP=true
 
 PHY_CORES=$(lscpu -p=CORE,SOCKET | grep -v '^#' | sort -u | wc -l)
@@ -191,6 +193,7 @@ ask_yes_no "Would you like to install hyprshot" "HYPRSHOT_SETUP" "true"
 ask_yes_no "Would you like to install swayosd (media keys/brightness)" "SWAYOSD_SETUP" "true"
 ask_yes_no "Would you like to install thunar (GUI file explorer)" "THUNAR_SETUP" "true"
 ask_yes_no "Would you like to install waybar (status bar)" "WAYBAR_SETUP" "true"
+ask_yes_no "Would you like to build walker + elephant (app launcher, replaces hyprlauncher as the SUPER+SPACE default)" "WALKER_SETUP" "false"
 
 has_tuigreet() {
     if command -v tuigreet &>/dev/null; then
@@ -261,6 +264,7 @@ HYPRSHOT_SETUP="$HYPRSHOT_SETUP"
 SWAYOSD_SETUP="$SWAYOSD_SETUP"
 THUNAR_SETUP="$THUNAR_SETUP"
 WAYBAR_SETUP="$WAYBAR_SETUP"
+WALKER_SETUP="$WALKER_SETUP"
 TUIGREET_SETUP="$TUIGREET_SETUP"
 BUILD_DIR="$BUILD_DIR"
 
@@ -644,6 +648,12 @@ CC=gcc-16 CXX=g++-16 install_hyprwm_package Hyprland "@stable" \
 
 install_hyprwm_package hyprlauncher "@stable" \
     libqalculate-dev
+
+if [[ $WALKER_SETUP == "true" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-elephant.sh"
+    BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-walker.sh"
+fi
 
 install_hyprwm_package hyprshutdown "@stable"
 
@@ -1117,6 +1127,14 @@ if [[ $THUNAR_SETUP == "true" ]]; then
 EOF
 fi
 echo
+if [[ $WALKER_SETUP == "true" ]]; then
+    cat <<EOF
+We've built walker + elephant (app launcher). elephant.service is enabled and running,
+but walker itself needs to be bound to a key - set menu = "walker" in "$HYPRLAND_CONF_FILE"
+to make it the SUPER+SPACE default (it currently points at hyprlauncher).
+
+EOF
+fi
 if [[ $NVIDIA_SETUP == "true" ]]; then
     cat <<'EOF'
 We've installed proprietory nvidia drivers
@@ -1137,3 +1155,6 @@ This script will not overwrite any config changes you make, you can run it multi
 
 -------------------------
 EOF
+
+
+

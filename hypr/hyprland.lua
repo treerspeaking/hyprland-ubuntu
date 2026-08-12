@@ -38,7 +38,7 @@ local colors = require("colors")
 -- Set programs that you use
 terminal = "kitty"
 fileManager = "nautilus"
-menu = "hyprlauncher"
+menu = "walker"
 browser = "brave-browser"
 
 -------------------
