@@ -655,6 +655,12 @@ if [[ $WALKER_SETUP == "true" ]]; then
     BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-walker.sh"
 fi
 
+if [[ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]]; then
+    apt_install unzip
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    bash "$SCRIPT_DIR/install-font.sh"
+fi
+
 install_hyprwm_package hyprshutdown "@stable"
 
 if [[ $HYPRPAPER_SETUP == "true" ]]; then
@@ -1155,6 +1161,3 @@ This script will not overwrite any config changes you make, you can run it multi
 
 -------------------------
 EOF
-
-
-
