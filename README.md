@@ -8,8 +8,8 @@ This is my Hyprland config which use Omarchy's theme without installing omarchy
 
 This config is released under the [MIT License](LICENSE).
 
-`themes/ristretto/` is vendored from [Omarchy](https://github.com/basecamp/omarchy),
+`themes/` is vendored from [Omarchy](https://github.com/basecamp/omarchy),
 which is also MIT licensed. Its copyright notice is kept at
-[`hypr/themes/ristretto/LICENSE`](hypr/themes/ristretto/LICENSE).
+[`themes/LICENSE`](themes/LICENSE).
 
 `setup-hyprbuntu.sh` is from [kralos/hyprbuntu](https://gitlab.com/kralos/hyprbuntu/-/blob/main/LICENCE?ref_type=heads) which is also MIT licensed. Its copyright notice is kept at [`install/LICENSE`](install/LICENSE)
