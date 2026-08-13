@@ -1,9 +1,10 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+local menu = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/menu.sh"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "Open terminal" })
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser), { description = "Open browser" })
-hl.bind(mainMod .. " + W", hl.dsp.window.close(), { description = "Close active window" })
+hl.bind(mainMod .. " + W", hl.dsp.window.kill(), { description = "Close active window" })
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager), { description = "Open file manager" })
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating window" })
@@ -19,7 +20,8 @@ hl.bind(
 	{ description = "Toggle fullscreen window" }
 )
 
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu), { description = "Open app launcher" })
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appmenu), { description = "Open app launcher" })
+hl.bind(mainMod .. " + ALT + SPACE", hl.dsp.exec_cmd(menu), { description = "Open app launcher" })
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo(), { description = "Toggle pseudotiling" })
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"), { description = "Toggle split direction" }) -- dwindle only
 
@@ -41,21 +43,13 @@ hl.bind(
 	{ description = "Swap window to right" }
 )
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.swap({ direction = "up" }), { description = "Swap window up" })
-hl.bind(
-	mainMod .. " + SHIFT + down",
-	hl.dsp.window.swap({ direction = "down" }),
-	{ description = "Swap window down" }
-)
+hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.swap({ direction = "down" }), { description = "Swap window down" })
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
-	hl.bind(
-		mainMod .. " + " .. key,
-		hl.dsp.focus({ workspace = i }),
-		{ description = "Switch to workspace " .. i }
-	)
+	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "Switch to workspace " .. i })
 	hl.bind(
 		mainMod .. " + SHIFT + " .. key,
 		hl.dsp.window.move({ workspace = i }),
@@ -64,11 +58,7 @@ for i = 1, 10 do
 end
 
 -- Example special workspace (scratchpad)
-hl.bind(
-	mainMod .. " + S",
-	hl.dsp.workspace.toggle_special("magic"),
-	{ description = "Toggle scratchpad workspace" }
-)
+hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"), { description = "Toggle scratchpad workspace" })
 hl.bind(
 	mainMod .. " + ALT + SHIFT + S",
 	hl.dsp.window.move({ workspace = "special:magic" }),
@@ -76,16 +66,8 @@ hl.bind(
 )
 
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind(
-	mainMod .. " + mouse_down",
-	hl.dsp.focus({ workspace = "e+1" }),
-	{ description = "Switch to next workspace" }
-)
-hl.bind(
-	mainMod .. " + mouse_up",
-	hl.dsp.focus({ workspace = "e-1" }),
-	{ description = "Switch to previous workspace" }
-)
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Switch to next workspace" })
+hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Switch to previous workspace" })
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Drag window" })
@@ -125,21 +107,9 @@ hl.bind(
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true, description = "Next media track" })
-hl.bind(
-	"XF86AudioPause",
-	hl.dsp.exec_cmd("playerctl play-pause"),
-	{ locked = true, description = "Play/pause media" }
-)
-hl.bind(
-	"XF86AudioPlay",
-	hl.dsp.exec_cmd("playerctl play-pause"),
-	{ locked = true, description = "Play/pause media" }
-)
-hl.bind(
-	"XF86AudioPrev",
-	hl.dsp.exec_cmd("playerctl previous"),
-	{ locked = true, description = "Previous media track" }
-)
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "Play/pause media" })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "Play/pause media" })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true, description = "Previous media track" })
 
 -- Screenshots
 local hyprshot = os.getenv("HOME") .. "/.local/bin/hyprshot"
