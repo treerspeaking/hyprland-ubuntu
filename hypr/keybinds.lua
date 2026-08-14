@@ -4,7 +4,7 @@ local menu = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/menu.sh"
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "Open terminal" })
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser), { description = "Open browser" })
-hl.bind(mainMod .. " + W", hl.dsp.window.kill(), { description = "Close active window" })
+hl.bind(mainMod .. " + W", hl.dsp.window.close(), { description = "Close active window" })
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager), { description = "Open file manager" })
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating window" })
