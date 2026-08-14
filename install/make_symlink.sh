@@ -25,3 +25,9 @@ if [ -d "$HOME/.config/walker" ] && [ ! -L "$HOME/.config/walker" ]; then
 fi
 
 ln -sfn ~/.local/share/hyprland-ubuntu/walker ~/.config/walker
+
+if [ -d "$HOME/.config/current-hyprland-ubuntu" ] && [ ! -L "$HOME/.config/current-hyprland-ubuntu" ]; then
+    mv "$HOME/.config/current-hyprland-ubuntu" "$HOME/.config/current-hyprland-ubuntu.bak.$(date +%Y%m%d_%H%M%S)"
+fi
+
+ln -sfn ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu ~/.config/current-hyprland-ubuntu
