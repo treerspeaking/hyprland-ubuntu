@@ -330,6 +330,7 @@ fi
 UWSM_ENV_FILE="$UWSM_ENV_DIR/env"
 touch "$UWSM_ENV_FILE"
 envs=(
+    "export PATH=\"\${HOME}/.cargo/bin:\${PATH}\""
     "export QT_AUTO_SCREEN_SCALE_FACTOR=1"
     "export QT_WAYLAND_DISABLE_WINDOWDECORATION=1"
     "export QT_QPA_PLATFORM=\"wayland;xcb\""
@@ -370,7 +371,7 @@ fi
     cd "$BUILD_DIR/uwsm"
     git fetch -p
     git checkout $(git tag --sort=-v:refname | head -n 1)
-    meson setup build --prefix=/usr --libdir=lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)
+    meson setup build --prefix=/usr --libdir=lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH) -Duwsm-app=enabled
     sudo meson install -C build
 )
 
@@ -499,11 +500,12 @@ has_battery() {
     return 1 # false
 }
 
-apt_install \
-    libclang-dev \
-    libpipewire-0.3-dev
-
-cargo install wiremix
+# From the original hyprbuntu script, write rewrite to use the official github repo install
+# apt_install \
+#     libclang-dev \
+#     libpipewire-0.3-dev
+#
+# cargo install wiremix
 
 install_hyprwm_package hyprwayland-scanner "@stable" \
     libpugixml-dev
@@ -649,17 +651,21 @@ CC=gcc-16 CXX=g++-16 install_hyprwm_package Hyprland "@stable" \
 install_hyprwm_package hyprlauncher "@stable" \
     libqalculate-dev
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [[ $WALKER_SETUP == "true" ]]; then
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-elephant.sh"
     BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-walker.sh"
 fi
 
 if [[ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]]; then
     apt_install unzip
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    # SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     bash "$SCRIPT_DIR/install-font.sh"
 fi
+
+bash "$SCRIPT_DIR/build-wiremix.sh"
+bash "$SCRIPT_DIR/build-bluetui.sh"
 
 install_hyprwm_package hyprshutdown "@stable"
 

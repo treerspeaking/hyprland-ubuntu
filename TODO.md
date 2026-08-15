@@ -10,14 +10,17 @@ Value Modifier
 32 Mod3
 64 Super
 128 Mod5
-Add a way to find install package with apt 
+Add a way to find install package with apt
+
 ```bash
 apt-cache search . | wc -l
 ```
+
 Add a way to remove package with apt
 
 ```
 apt list --installed | fzf
 ```
+
 Add theme switching
 Add waybar

@@ -1,0 +1,13 @@
+
+[Unit]
+Description=Walker Launcher Service
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/walker --gapplication-service
+Restart=on-failure
+RestartSec=2
+MemoryMax=300M
+
+[Install]
+WantedBy=graphical-session.target

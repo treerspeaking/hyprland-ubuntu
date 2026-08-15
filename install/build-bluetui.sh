@@ -1,0 +1,1 @@
+cargon install bluetui

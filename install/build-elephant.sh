@@ -41,7 +41,7 @@ for PROVIDER in "${PROVIDERS[@]}"; do
         # otherwise Go rejects the plugin at load time with an ABI mismatch
         # ("plugin was built with a different version of package internal/goarch")
         go build -buildvcs=false -trimpath -buildmode=plugin
-        cp "$PROVIDER.so" "$HOME/.local/hyprland-ubuntu/elephant/providers/"
+        cp "$PROVIDER.so" "$HOME/.local/share/hyprland-ubuntu/elephant/providers/"
     )
 done
 
