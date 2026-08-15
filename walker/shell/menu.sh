@@ -1,14 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # mymenu — an Omarchy-style nested menu built on `walker --dmenu`
 #
 # Usage:
-#   mymenu            # open the top-level menu
-#   mymenu style      # jump straight to a submenu
+#   menu            # open the top-level menu
+#   menu style      # jump straight to a submenu
 #
 # Bind it in Hyprland:
 #   bindd = SUPER ALT, space, My Menu, exec, ~/.local/bin/mymenu
 
 set -uo pipefail
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 BACK="󰌍  Back"
 
@@ -27,16 +29,23 @@ menu() {
     shift
     local choice
     # --theme is optional; see the styling note at the bottom of this file.
-    choice=$(printf '%s\n' "$@" | walker --dmenu -p "$prompt" 2>/dev/null) || exit 0
+    choice=$(printf '%s\n' "$@" | walker --dmenu --minheight 1 --minwidth 260 --maxwidth 260 -p "$prompt" 2>/dev/null) || exit 0
     [[ -z $choice ]] && exit 0
     strip "$choice"
 }
 
+appmenu() {
+    "$SCRIPT_DIR/appmenu.sh"
+}
+
 # run something detached so the menu process doesn't hold the app open
-launch() { uwsm app -- "$@" 2>/dev/null || setsid "$@" & }
+launch() { uwsm-app -- "$@" 2>/dev/null || setsid "$@" & }
 
 # open a TUI in a floating terminal (adjust to your terminal of choice)
-tui() { launch alacritty --class=Tui -e "$@"; }
+# tui() { launch kitty --class=Tui -e "$@"; }
+tui() {
+    xdg-terminal-exec -- "$@"
+}
 
 # ------------------------------------------------------------------ menus ---
 
@@ -46,23 +55,10 @@ show_main() {
         "󰔎  Style" \
         "󰒓  System" \
         "󰐥  Power") in
-    Apps) show_apps ;;
+    Apps) appmenu ;;
     Style) show_style ;;
     System) show_system ;;
     Power) show_power ;;
-    esac
-}
-
-show_apps() {
-    case $(menu "Apps" \
-        "󰈹  Browser" \
-        "󰆍  Terminal" \
-        "󰉋  Files" \
-        "$BACK") in
-    Browser) launch brave ;;
-    Terminal) launch alacritty ;;
-    Files) launch nautilus ;;
-    Back) show_main ;;
     esac
 }
 
@@ -82,15 +78,13 @@ show_style() {
 
 show_system() {
     case $(menu "System" \
-        "󰚰  Update" \
-        "󰑓  Restart Waybar" \
         "󰖩  Wifi" \
         "󰂯  Bluetooth" \
+        "󰕾  Volume" \
         "$BACK") in
-    Update) tui omarchy-update ;;
-    "Restart Waybar") omarchy-restart-waybar ;;
     Wifi) tui impala ;;
     Bluetooth) tui bluetui ;;
+    Volume) tui wiremix ;;
     Back) show_main ;;
     esac
 }
@@ -104,7 +98,7 @@ show_power() {
         "󰐥  Shutdown" \
         "$BACK") in
     Lock) hyprlock ;;
-    Logout) hyprctl dispatch exit ;;
+    Logout) hyprctl dispatch 'hl.dsp.exit()' ;;
     Suspend) systemctl suspend ;;
     Restart) systemctl reboot ;;
     Shutdown) systemctl poweroff ;;
@@ -112,19 +106,29 @@ show_power() {
     esac
 }
 
+toggle_existing_menu() {
+    if pgrep -f "walker.*--dmenu" >/dev/null; then
+        walker --close >/dev/null 2>&1
+        exit 0
+    fi
+}
+
 # --------------------------------------------------------------- dispatch ---
 
-case "${1:-}" in
-"") show_main ;;
-apps) show_apps ;;
-style) show_style ;;
-system) show_system ;;
-power) show_power ;;
-*)
-    echo "Unknown submenu: $1" >&2
-    exit 1
-    ;;
-esac
+toggle_existing_menu
+
+show_main
+
+# case "${1:-}" in
+# "") show_main ;;
+# style) show_style ;;
+# system) show_system ;;
+# power) show_power ;;
+# *)
+#     echo "Unknown submenu: $1" >&2
+#     exit 1
+#     ;;
+# esac
 
 # ------------------------------------------------------------------ notes ---
 #

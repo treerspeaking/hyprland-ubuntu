@@ -1,5 +1,8 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
-local menu = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/menu.sh"
+-- local menu = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/menu.sh"
+local walker = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/shell/"
+local waybar = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/waybar/shell/"
+local functions = require("functions")
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "Open terminal" })
@@ -20,11 +23,19 @@ hl.bind(
 	{ description = "Toggle fullscreen window" }
 )
 
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appmenu), { description = "Open app launcher" })
-hl.bind(mainMod .. " + ALT + SPACE", hl.dsp.exec_cmd(menu), { description = "Open app launcher" })
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo(), { description = "Toggle pseudotiling" })
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"), { description = "Toggle split direction" }) -- dwindle only
+-- border
+hl.bind(mainMod .. " + B", functions.toggle_border, { description = "Toggle window border" })
 
+-- waybar
+
+hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.exec_cmd(waybar .. "toggle.sh"))
+--
+--
+-- menu
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(walker .. "appmenu.sh"), { description = "Open app launcher" })
+hl.bind(mainMod .. " + ALT + SPACE", hl.dsp.exec_cmd(walker .. "/menu.sh"), { description = "Open app launcher" })
+hl.bind(mainMod .. " + P", hl.dsp.window.pseudo(), { description = "Toggle pseudotiling" })
+hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"), { description = "Toggle split direction" }) -- dwindle onl
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }), { description = "Move focus left" })
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }), { description = "Move focus right" })
@@ -117,22 +128,14 @@ hl.bind("PRINT", hl.dsp.exec_cmd(hyprshot .. " -m region"), { description = "Reg
 hl.bind("ALT + PRINT", hl.dsp.exec_cmd(hyprshot .. " -m window"), { description = "Window screenshot" })
 hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd(hyprshot .. " -m output"), { description = "Monitor screenshot" })
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(hyprshot .. " -m region"), { description = "Region screenshot" })
--- Notifications (swaync) which i does not have install so will delete
-hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("swaync-client --close-latest"), { description = "Dismiss last notification" })
-hl.bind(
-	"SUPER + SHIFT + COMMA",
-	hl.dsp.exec_cmd("swaync-client --close-all"),
-	{ description = "Dismiss all notifications" }
-)
-hl.bind(
-	"SUPER + CTRL + COMMA",
-	hl.dsp.exec_cmd("swaync-client --toggle-panel"),
-	{ description = "Open notifications panel" }
-)
+-- notification mako
+hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("makoctl dismiss"), { description = "Dismiss last notification" })
+hl.bind("SUPER + SHIFT + COMMA", hl.dsp.exec_cmd("makoctl dismiss -a"), { description = "Dismiss all notifications" })
+hl.bind("SUPER + CTRL + COMMA", hl.dsp.exec_cmd("makoctl restore"), { description = "Open notifications panel" })
 hl.bind(
 	"SUPER + ALT + COMMA",
 	hl.dsp.exec_cmd(
-		"swaync-client --toggle-dnd && swaync-client --get-dnd | grep -q 'true' && notify-send 'Silenced notifications' || notify-send 'Enabled notifications'"
+		"makoctl mode -t dnd && makoctl mode | grep -q 'dnd' && notify-send 'Silenced notifications' || notify-send 'Enabled notifications'"
 	),
 	{ description = "Toggle silencing notifications" }
 )
