@@ -23,4 +23,7 @@ apt list --installed | fzf
 ```
 
 Add theme switching
-Add waybar
+Add show-keybinds
+Add theme for mako
+Add to make some tui show in the middle of the screen
+Add install remove for apt
