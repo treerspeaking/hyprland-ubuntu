@@ -63,7 +63,7 @@ for i = 1, 10 do
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "Switch to workspace " .. i })
 	hl.bind(
 		mainMod .. " + SHIFT + " .. key,
-		hl.dsp.window.move({ workspace = i }),
+		hl.dsp.window.move({ workspace = i, follow = false }),
 		{ description = "Move window to workspace " .. i }
 	)
 end
@@ -72,7 +72,7 @@ end
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"), { description = "Toggle scratchpad workspace" })
 hl.bind(
 	mainMod .. " + ALT + SHIFT + S",
-	hl.dsp.window.move({ workspace = "special:magic" }),
+	hl.dsp.window.move({ workspace = "special:magic", follow = false }),
 	{ description = "Move window to scratchpad" }
 )
 
