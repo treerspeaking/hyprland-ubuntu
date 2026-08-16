@@ -44,21 +44,30 @@ launch() { uwsm-app -- "$@" 2>/dev/null || setsid "$@" & }
 # open a TUI in a floating terminal (adjust to your terminal of choice)
 # tui() { launch kitty --class=Tui -e "$@"; }
 tui() {
-    xdg-terminal-exec -- "$@"
+    xdg-terminal-exec --app-id=floating.terminal "$@"
 }
+# tui() { launch alacritty --class=Tui -e "$@"; }
 
 # ------------------------------------------------------------------ menus ---
 
 show_main() {
-    case $(menu "Menu" \
-        "󰀻  Apps" \
-        "󰔎  Style" \
-        "󰒓  System" \
-        "󰐥  Power") in
+    case $(
+        menu "Menu" \
+            "󰀻  Apps" \
+            "󰔎  Style" \
+            "  System" \
+            "󰐥  Power" \
+            "󰉉  Install" \
+            "󰭌  Remove" \
+            "󰉁  Keybind"
+    ) in
     Apps) appmenu ;;
     Style) show_style ;;
     System) show_system ;;
     Power) show_power ;;
+    Install) install ;;
+    Remove) remove ;;
+    Keybind) remove ;;
     esac
 }
 
@@ -66,25 +75,23 @@ show_style() {
     case $(menu "Style" \
         "󰸌  Theme" \
         "󰋩  Background" \
-        "󰛖  Font" \
         "$BACK") in
     # these open Walker's own selectors rather than a dmenu list
     Theme) walker -m menus:omarchythemes ;;
     Background) walker -m menus:omarchyBackgroundSelector ;;
-    Font) omarchy-font-list ;;
     Back) show_main ;;
     esac
 }
 
 show_system() {
     case $(menu "System" \
-        "󰖩  Wifi" \
         "󰂯  Bluetooth" \
         "󰕾  Volume" \
+        "󰖩  Wifi" \
         "$BACK") in
-    Wifi) tui impala ;;
     Bluetooth) tui bluetui ;;
     Volume) tui wiremix ;;
+    Wifi) tui impala ;;
     Back) show_main ;;
     esac
 }
@@ -104,6 +111,14 @@ show_power() {
     Shutdown) systemctl poweroff ;;
     Back) show_main ;;
     esac
+}
+
+install() {
+    tui "$SCRIPT_DIR/install.sh"
+}
+
+remove() {
+    tui "$SCRIPT_DIR/remove.sh"
 }
 
 toggle_existing_menu() {
@@ -129,22 +144,3 @@ show_main
 #     exit 1
 #     ;;
 # esac
-
-# ------------------------------------------------------------------ notes ---
-#
-# STYLING
-#   Omarchy narrows the menu to a ~295px sidebar by passing a dedicated Walker
-#   theme. Create ~/.config/walker/themes/mymenu/ (copy Omarchy's
-#   ~/.local/share/omarchy/default/walker/themes/omarchy-default/ as a base),
-#   set your width in style.css, then add `--theme mymenu` to the walker call
-#   in menu(). Check `walker --help` first — flag names have moved between
-#   versions.
-#
-# SPEED
-#   Make sure walker is running as a service (walker --gapplication-service,
-#   usually via ~/.config/autostart/walker.desktop on Omarchy). Cold-starting
-#   walker on every nesting level feels sluggish.
-#
-# ICONS
-#   The glyphs above are Nerd Font. strip() removes them before matching, so
-#   you can change any icon without touching the case statements.
