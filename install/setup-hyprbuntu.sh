@@ -553,6 +553,7 @@ install_hyprwm_package hyprland-guiutils "@stable"
 install_hyprwm_package hyprpolkitagent "@stable" \
     libpolkit-agent-1-dev \
     libpolkit-qt6-1-dev \
+    qml6-module-org-hyprland-style \
     qml6-module-qtquick-controls \
     qml6-module-qtquick-layouts \
     qt6-base-dev \

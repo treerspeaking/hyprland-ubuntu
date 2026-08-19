@@ -27,3 +27,5 @@ Add show-keybinds
 Add theme for mako
 Add to make some tui show in the middle of the screen
 Add install remove for apt
+
+Hyprland-specific services launch
