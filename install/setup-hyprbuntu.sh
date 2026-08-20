@@ -31,9 +31,10 @@ SWAYOSD_SETUP=true
 THEME_PREF=dark
 THUNAR_SETUP=false
 TUIGREET_SETUP=false
-WALKER_SETUP=false
+WALKER_SETUP=true
 WAYBAR_SETUP=true
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PHY_CORES=$(lscpu -p=CORE,SOCKET | grep -v '^#' | sort -u | wc -l)
 MAKE_THREADS=$((PHY_CORES > 1 ? PHY_CORES - 1 : 1))
 ask_yes_no() {
@@ -652,8 +653,6 @@ CC=gcc-16 CXX=g++-16 install_hyprwm_package Hyprland "@stable" \
 install_hyprwm_package hyprlauncher "@stable" \
     libqalculate-dev
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 if [[ $WALKER_SETUP == "true" ]]; then
     BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-elephant.sh"
     BUILD_DIR="$BUILD_DIR" bash "$SCRIPT_DIR/build-walker.sh"
@@ -661,12 +660,11 @@ fi
 
 if [[ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]]; then
     apt_install unzip
-    # SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     bash "$SCRIPT_DIR/install-font.sh"
 fi
 
 bash "$SCRIPT_DIR/build-wiremix.sh"
-bash "$SCRIPT_DIR/build-bluetui.sh"
+# bash "$SCRIPT_DIR/build-bluetui.sh"
 
 install_hyprwm_package hyprshutdown "@stable"
 
@@ -1047,6 +1045,13 @@ EOF
         curl -o "$WAYBAR_CONFIG_DIR/style.css" https://raw.githubusercontent.com/Alexays/Waybar/refs/heads/master/resources/style.css
     fi
 fi
+
+# Point ~/.config at this repo's configs - any existing real dirs (including the
+# ones generated above) are moved aside to <name>.bak.<timestamp> first
+echo "------------------------------------------------"
+echo "Symlinking configs into $XDG_CONFIG_HOME..."
+echo "------------------------------------------------"
+bash "$SCRIPT_DIR/make_symlink.sh"
 
 if [[ $TUIGREET_SETUP == "true" ]]; then
     apt_install \

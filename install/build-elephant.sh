@@ -7,6 +7,9 @@ set -e
 
 BUILD_DIR="${BUILD_DIR:-$HOME/hyprbuntu}"
 
+HYPRLAND_UBUNTU_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROVIDER_DIR="$HYPRLAND_UBUNTU_DIR/elephant/providers"
+
 # Providers to build alongside the core service. Add/remove names from
 # internal/providers/ in https://github.com/abenz1267/elephant as needed
 # (e.g. "bluetooth", "windows", "unicode", "aptpackages").
@@ -32,7 +35,7 @@ git checkout "$(git tag --sort=-v:refname | head -n 1)"
 
 sudo make install
 
-mkdir -p "$HOME/.local/hyprland-ubuntu/elephant/providers/"
+mkdir -p "$PROVIDER_DIR"
 for PROVIDER in "${PROVIDERS[@]}"; do
     echo "Building provider: $PROVIDER"
     (
@@ -41,7 +44,7 @@ for PROVIDER in "${PROVIDERS[@]}"; do
         # otherwise Go rejects the plugin at load time with an ABI mismatch
         # ("plugin was built with a different version of package internal/goarch")
         go build -buildvcs=false -trimpath -buildmode=plugin
-        cp "$PROVIDER.so" "$HOME/.local/share/hyprland-ubuntu/elephant/providers/"
+        cp "$PROVIDER.so" "$PROVIDER_DIR/"
     )
 done
 

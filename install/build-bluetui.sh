@@ -1,1 +1,3 @@
-cargon install bluetui
+#!/usr/bin/env bash
+
+cargo install bluetui
