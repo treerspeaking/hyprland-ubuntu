@@ -22,16 +22,24 @@ local colors = require("colors")
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-	output = "HDMI-A-1",
-	mode = "3840x2160@60",
-	position = "-2560x0",
-	scale = 1.5,
-})
+-- hl.monitor({
+-- 	output = "HDMI-A-1",
+-- 	mode = "3840x2160@60",
+-- 	position = "-2560x0",
+-- 	scale = 1.5,
+-- })
+--
+-- hl.monitor({
+-- 	output = "DP-1",
+-- 	mode = "2560x1440@144",
+-- 	position = "0x0",
+-- 	scale = 1,
+-- })
+--
 
 hl.monitor({
-	output = "DP-1",
-	mode = "2560x1440@144",
+	output = "HDMI-A-1",
+	mode = "1920x1080@144",
 	position = "0x0",
 	scale = 1,
 })

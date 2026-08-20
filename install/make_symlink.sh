@@ -35,7 +35,7 @@ fi
 
 ln -sfn "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu" ~/.config/current-hyprland-ubuntu
 
-if [ -e "$HOME/.config/systemd/user/walker.service" ] || [ ! -L "$HOME/.config/systemd/user/walker.service" ]; then
+if [ -e "$HOME/.config/systemd/user/walker.service" ] && [ ! -L "$HOME/.config/systemd/user/walker.service" ]; then
     mv "$HOME/.config/systemd/user/walker.service" "$HOME/.config/systemd/user/walker.service.bak.$(date +%Y%m%d_%H%M%S)"
 fi
 
