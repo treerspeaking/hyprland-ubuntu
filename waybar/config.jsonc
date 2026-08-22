@@ -65,8 +65,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "omarchy-launch-or-focus-tui btop",
-    "on-click-right": "alacritty",
+    "on-click": "~/.local/share/hyprland-ubuntu/btop/shell/launch-btop.sh",
   },
   "clock": {
     "format": "{:L%A %H:%M}",
@@ -121,11 +120,11 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "omarchy-launch-bluetooth",
+    "on-click": "~/.local/share/hyprland-ubuntu/bluetui/shell/launch-bluetui.sh",
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "omarchy-launch-audio",
+    "on-click": "~/.local/share/hyprland-ubuntu/wiremix/shell/launch-wiremix.sh",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
@@ -188,77 +187,3 @@
     "spacing": 17,
   },
 }
-//
-// {
-//   "layer": "top",
-//   "position": "top",
-//   "height": 30,
-//   "spacing": 4,
-//   "modules-left": ["hyprland/workspaces", "hyprland/submap"],
-//   "modules-center": ["hyprland/window"],
-//   "modules-right": [
-//     "pulseaudio",
-//     "network#wifi",
-//     "network#ethernet",
-//     "bluetooth",
-//     "clock",
-//     "custom/power",
-//   ],
-//   "hyprland/workspaces": {
-//     "format": "{name}",
-//     "disable-scroll": true,
-//     "all-outputs": true,
-//   },
-//   "hyprland/window": {
-//     "max-length": 50,
-//   },
-//   "pulseaudio": {
-//     "format": "{volume}% {icon} {format_source}",
-//     "format-bluetooth": "{volume}% {icon} {format_source}",
-//     "format-bluetooth-muted": " {icon} {format_source}",
-//     "format-muted": " {format_source}",
-//     "format-source": "{volume}% ",
-//     "format-source-muted": "",
-//     "format-icons": {
-//       "headphone": "",
-//       "hands-free": "",
-//       "headset": "",
-//       "phone": "",
-//       "portable": "",
-//       "car": "",
-//       "default": ["", "", ""],
-//     },
-//     "on-click": "pidof wiremix >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e wiremix\"",
-//   },
-//   "clock": {
-//     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-//     "format-alt": "{:%Y-%m-%d}",
-//   },
-//   "network#wifi": {
-//     "interface": "wl*",
-//     "format-wifi": "{essid} ({signalStrength}%) ",
-//     "tooltip-format": "{ifname} via {gwaddr} ",
-//     "format-linked": "{ifname} (No IP) ",
-//     "format-disconnected": "Disconnected ⚠",
-//     "on-click": "pidof wlctl >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e wlctl\"",
-//   },
-//   "network#ethernet": {
-//     "interface": "en*",
-//     "format-ethernet": "{ipaddr}/{cidr} ",
-//     "tooltip-format": "{ifname} via {gwaddr} ",
-//     "format-linked": "{ifname} (No IP) ",
-//     "format-disconnected": "Disconnected ⚠",
-//     "on-click": "pidof nmtui >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e nmtui\"",
-//   },
-//   "bluetooth": {
-//     "format": " {status}",
-//     "format-connected": " {device_alias}",
-//     "on-click": "pidof bluetui >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e bluetui\"",
-//   },
-//
-//   "custom/power": {
-//     "format": " ",
-//     "tooltip": false,
-//     "on-click": "wlogout",
-//   },
-// }

@@ -664,6 +664,7 @@ if [[ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]]; then
 fi
 
 bash "$SCRIPT_DIR/build-wiremix.sh"
+bash "$SCRIPT_DIR/install-btop.sh"
 # bash "$SCRIPT_DIR/build-bluetui.sh"
 
 install_hyprwm_package hyprshutdown "@stable"

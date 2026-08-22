@@ -34,10 +34,6 @@ menu() {
     strip "$choice"
 }
 
-appmenu() {
-    "$SCRIPT_DIR/appmenu.sh"
-}
-
 # run something detached so the menu process doesn't hold the app open
 launch() { uwsm-app -- "$@" 2>/dev/null || setsid "$@" & }
 
@@ -67,7 +63,7 @@ show_main() {
     Power) show_power ;;
     Install) install ;;
     Remove) remove ;;
-    Keybind) remove ;;
+    Keybind) keybind ;;
     esac
 }
 
@@ -113,12 +109,20 @@ show_power() {
     esac
 }
 
+appmenu() {
+    "$SCRIPT_DIR/appmenu.sh"
+}
+
 install() {
     tui "$SCRIPT_DIR/install.sh"
 }
 
 remove() {
     tui "$SCRIPT_DIR/remove.sh"
+}
+
+keybind() {
+    "$SCRIPT_DIR/show-keybinds.sh"
 }
 
 toggle_existing_menu() {
