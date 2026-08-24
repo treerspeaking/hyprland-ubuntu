@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-keybinds=()
 keybind=""
 description=""
 while read -r line; do
@@ -27,15 +26,11 @@ while read -r line; do
 
     if [[ "$line" == *"description:"* ]]; then
         description="${line##*"description: "}"
-        # printf -v keybinditem "%-35s → %s \n" "$keybind" "$description"
-        # echo "$keybinditem"
         printf "%-35s → %s \n" "$keybind" "$description"
-        # echo "$keybinditem"
-        # Reset the keybinds for next run
         keybind=""
         description=""
     fi
 
     # keybinds+=("$keybinditem")
 
-done < <(hyprctl binds) | walker --dmenu --minheight 1 --width 900 --height 700 -p "Search Keybinds" "${keybinds[@]}" 2>/dev/null
+done < <(hyprctl binds) | walker --dmenu --minheight 1 --width 900 --height 700 -p "Search Keybinds" 2>/dev/null

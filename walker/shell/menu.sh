@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 # mymenu — an Omarchy-style nested menu built on `walker --dmenu`
-#
-# Usage:
-#   menu            # open the top-level menu
-#   menu style      # jump straight to a submenu
-#
-# Bind it in Hyprland:
-#   bindd = SUPER ALT, space, My Menu, exec, ~/.local/bin/mymenu
 
 set -uo pipefail
 
@@ -29,7 +22,7 @@ menu() {
     shift
     local choice
     # --theme is optional; see the styling note at the bottom of this file.
-    choice=$(printf '%s\n' "$@" | walker --dmenu --minheight 1 --minwidth 260 --maxwidth 260 -p "$prompt" 2>/dev/null) || exit 0
+    choice=$(printf '%s\n' "$@" | walker --dmenu --minheight 1 --maxheight 600 --minwidth 260 --maxwidth 260 -p "$prompt" 2>/dev/null) || exit 0
     [[ -z $choice ]] && exit 0
     strip "$choice"
 }
@@ -42,7 +35,6 @@ launch() { uwsm-app -- "$@" 2>/dev/null || setsid "$@" & }
 tui() {
     xdg-terminal-exec --app-id=floating.terminal "$@"
 }
-# tui() { launch alacritty --class=Tui -e "$@"; }
 
 # ------------------------------------------------------------------ menus ---
 
@@ -73,21 +65,23 @@ show_style() {
         "󰋩  Background" \
         "$BACK") in
     # these open Walker's own selectors rather than a dmenu list
-    Theme) walker -m menus:omarchythemes ;;
-    Background) walker -m menus:omarchyBackgroundSelector ;;
+    Theme) change_theme ;;
+    Background) walker -m menus:omarchyBackgroundSelector --width 800 --minheight 400 ;;
     Back) show_main ;;
     esac
 }
 
 show_system() {
-    case $(menu "System" \
-        "󰂯  Bluetooth" \
-        "󰕾  Volume" \
-        "󰖩  Wifi" \
-        "$BACK") in
+    case $(
+        menu "System" \
+            "󰂯  Bluetooth" \
+            "󰕾  Volume" \
+            "󰍛  Btop"
+        "$BACK"
+    ) in
     Bluetooth) tui bluetui ;;
     Volume) tui wiremix ;;
-    Wifi) tui impala ;;
+    Btop) tui btop ;;
     Back) show_main ;;
     esac
 }
@@ -97,12 +91,14 @@ show_power() {
         "󰌾  Lock" \
         "󰍃  Logout" \
         "󰤄  Suspend" \
+        "󰒲  Hibernate" \
         "󰜉  Restart" \
         "󰐥  Shutdown" \
         "$BACK") in
     Lock) hyprlock ;;
     Logout) hyprctl dispatch 'hl.dsp.exit()' ;;
     Suspend) systemctl suspend ;;
+    Hibernate) systemctl hibernate ;;
     Restart) systemctl reboot ;;
     Shutdown) systemctl poweroff ;;
     Back) show_main ;;
@@ -125,6 +121,10 @@ keybind() {
     "$SCRIPT_DIR/show-keybinds.sh"
 }
 
+change-theme() {
+    "$SCRIPT_DIR/change-theme.sh"
+}
+
 toggle_existing_menu() {
     if pgrep -f "walker.*--dmenu" >/dev/null; then
         walker --close >/dev/null 2>&1
@@ -137,14 +137,3 @@ toggle_existing_menu() {
 toggle_existing_menu
 
 show_main
-
-# case "${1:-}" in
-# "") show_main ;;
-# style) show_style ;;
-# system) show_system ;;
-# power) show_power ;;
-# *)
-#     echo "Unknown submenu: $1" >&2
-#     exit 1
-#     ;;
-# esac
