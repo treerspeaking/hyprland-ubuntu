@@ -286,11 +286,7 @@ SYSTEMD_USER_DIR="/usr/lib/systemd/user"
 HYPR_CONF_DIR="$XDG_CONFIG_HOME/hypr"
 mkdir -p "$HYPR_CONF_DIR"
 HYPRLAND_CONF_FILE="$HYPR_CONF_DIR/hyprland.lua"
-BINDS_CONF_FILE="$HYPR_CONF_DIR/hyprbuntu-binds.lua"
 mkdir -p "$HOME/.local/bin"
-if [ ! -f "$BINDS_CONF_FILE" ]; then
-    touch "$BINDS_CONF_FILE"
-fi
 
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository -y universe
 sudo DEBIAN_FRONTEND=noninteractive apt-get update
@@ -745,16 +741,6 @@ if [ "none" != "$NOTIFICATION_DAEMON_PREF" ]; then
     enable_recursive_icon_lookup = true
 EOF
         fi
-        if ! grep -qiF "notification" "$BINDS_CONF_FILE"; then
-            cat <<'EOF' >>"$BINDS_CONF_FILE"
--- Notifications (dunst)
-hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("dunstctl close"), { description = "Dismiss last notification" })
-hl.bind("SUPER + SHIFT + COMMA", hl.dsp.exec_cmd("dunstctl close-all"), { description = "Dismiss all notifications" })
-hl.bind("SUPER + CTRL + COMMA", hl.dsp.exec_cmd("dunstctl history-pop"), { description = "Open notifications panel" })
-hl.bind("SUPER + ALT + COMMA", hl.dsp.exec_cmd("dunstctl set-paused toggle && dunstctl is-paused | grep -q 'true' && notify-send 'Silenced notifications' || notify-send 'Enabled notifications'"), { description = "Toggle silencing notifications" })
-
-EOF
-        fi
         systemctl --user enable dunst.service
     fi
     if [ "mako" = "$NOTIFICATION_DAEMON_PREF" ]; then
@@ -774,30 +760,10 @@ invisible=1
 invisible=0
 EOF
         fi
-        if ! grep -qiF "notification" "$BINDS_CONF_FILE"; then
-            cat <<'EOF' >>"$BINDS_CONF_FILE"
--- Notifications (mako)
-hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("makoctl dismiss"), { description = "Dismiss last notification" })
-hl.bind("SUPER + SHIFT + COMMA", hl.dsp.exec_cmd("makoctl dismiss -a"), { description = "Dismiss all notifications" })
-hl.bind("SUPER + CTRL + COMMA", hl.dsp.exec_cmd("makoctl restore"), { description = "Open notifications panel" })
-hl.bind("SUPER + ALT + COMMA", hl.dsp.exec_cmd("makoctl mode -t dnd && makoctl mode | grep -q 'dnd' && notify-send 'Silenced notifications' || notify-send 'Enabled notifications'"), { description = "Toggle silencing notifications" })
-
-EOF
-        fi
         systemctl --user enable mako.service
     fi
     if [ "swaync" = "$NOTIFICATION_DAEMON_PREF" ]; then
         apt_install sway-notification-center
-        if ! grep -qiF "notification" "$BINDS_CONF_FILE"; then
-            cat <<'EOF' >>"$BINDS_CONF_FILE"
--- Notifications (swaync)
-hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("swaync-client --close-latest"), { description = "Dismiss last notification" })
-hl.bind("SUPER + SHIFT + COMMA", hl.dsp.exec_cmd("swaync-client --close-all"), { description = "Dismiss all notifications" })
-hl.bind("SUPER + CTRL + COMMA", hl.dsp.exec_cmd("swaync-client --toggle-panel"), { description = "Open notifications panel" })
-hl.bind("SUPER + ALT + COMMA", hl.dsp.exec_cmd("swaync-client --toggle-dnd && swaync-client --get-dnd | grep -q 'true' && notify-send 'Silenced notifications' || notify-send 'Enabled notifications'"), { description = "Toggle silencing notifications" })
-
-EOF
-        fi
         systemctl --user enable swaync.service
     fi
 fi
@@ -812,16 +778,6 @@ if [[ $HYPRSHOT_SETUP == "true" ]]; then
         mkdir -p "$HOME/Pictures/Screenshots"
         curl -o "$HOME/.local/bin/hyprshot" https://raw.githubusercontent.com/Gustash/Hyprshot/refs/heads/main/hyprshot
         chmod 755 "$HOME/.local/bin/hyprshot"
-    fi
-    if ! grep -qiF "shot" "$BINDS_CONF_FILE"; then
-        cat <<'EOF' >>"$BINDS_CONF_FILE"
--- Screenshots
-local hyprshot = os.getenv("HOME") .. "/.local/bin/hyprshot"
-hl.bind("PRINT", hl.dsp.exec_cmd(hyprshot .. " -m region"), { description = "Region screenshot" })
-hl.bind("ALT + PRINT", hl.dsp.exec_cmd(hyprshot .. " -m window"), { description = "Window screenshot" })
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd(hyprshot .. " -m output"), { description = "Monitor screenshot" })
-
-EOF
     fi
 fi
 
@@ -851,27 +807,6 @@ EOF
         systemctl --user enable swayosd.service
         # brightnessctl is still expecting video group membership
         sudo usermod -aG video $USER
-    fi
-
-    if ! grep -qF "XF86" "$BINDS_CONF_FILE"; then
-        cat <<'EOF' >>"$BINDS_CONF_FILE"
--- Multimedia keys for media, volume and screen brightness (with SwayOSD)
--- These have been disabled since the default ~/.config/hypr/hyprland.lua already binds these
--- To activate swayosd, remove the duplicate XF86* binds from hyprland.lua and uncomment the following
---hl.bind("XF86AudioNext", hl.dsp.exec_cmd("swayosd-client --playerctl next"), { locked = true, description = "Next track" })
---hl.bind("XF86AudioPause", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"), { locked = true, description = "Pause" })
---hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"), { locked = true, description = "Play" })
---hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("swayosd-client --playerctl previous"), { locked = true, description = "Previous track" })
-
---hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"), { locked = true, repeating = true, description = "Volume up" })
---hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"), { locked = true, repeating = true, description = "Volume down" })
---hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true, repeating = true, description = "Mute" })
---hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"), { locked = true, repeating = true, description = "Mute microphone" })
-
---hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("swayosd-client --brightness raise"), { locked = true, repeating = true, description = "Brightness up" })
---hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lower"), { locked = true, repeating = true, description = "Brightness down" })
-
-EOF
     fi
 fi
 
@@ -1119,9 +1054,6 @@ You need to select "thunar" when asked (or fix this later by swapping "dolphin" 
 If you prefer to swap out any components you can install replacements and re-configure "$HYPRLAND_CONF_FILE"
 If you want to set environmental variables see "$UWSM_ENV_FILE"
 If you are not using greetd / tuigreet from this script, I would highly recommend using a another uwsm based desktop manager.
-A few helpful binds have been added to "$BINDS_CONF_FILE", if you want to use them you should add this to your "$HYPRLAND_CONF_FILE"
-
-require("hyprbuntu-binds")
 
 Please reboot to start using Hyprland.
 
