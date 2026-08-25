@@ -1,3 +1,5 @@
 elephant/providers
 *.so
 current
+current-hyprland-ubuntu/theme/background-img
+current-hyprland-ubuntu/tmp
