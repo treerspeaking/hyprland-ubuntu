@@ -15,7 +15,6 @@
 -- require("myColors")
 
 -- Omarchy "ristretto" palette, see themes/ristretto/colors.toml
-local colors = require("colors")
 
 ------------------
 ---- MONITORS ----

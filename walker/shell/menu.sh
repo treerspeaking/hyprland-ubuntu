@@ -65,7 +65,7 @@ show_style() {
         "󰋩  Background" \
         "$BACK") in
     # these open Walker's own selectors rather than a dmenu list
-    Theme) change_theme ;;
+    Theme) walker -m menus:omarchythemes --width 800 --minheight 400 ;;
     Background) walker -m menus:omarchyBackgroundSelector --width 800 --minheight 400 ;;
     Back) show_main ;;
     esac

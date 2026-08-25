@@ -1,4 +1,3 @@
--- Omarchy "ristretto" palette (themes/ristretto/colors.toml).
 -- Single source of truth for colors used across this config.
 return {
 	mode = "dark",
