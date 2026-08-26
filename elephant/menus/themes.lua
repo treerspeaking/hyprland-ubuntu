@@ -1,9 +1,13 @@
---
--- Dynamic Omarchy Theme Menu for Elephant/Walker
+-- Modified from https://github.com/basecamp/omarchy/blob/v3.8.4/default/elephant/omarchy_themes.lua
+-- Theme Menu for Elephant/Walker
 --
 Name = "omarchythemes"
 NamePretty = "Omarchy Themes"
 HideFromProviderlist = true
+
+local function ShellEscape(s)
+	return "'" .. s:gsub("'", "'\\''") .. "'"
+end
 
 -- Check if file exists using Lua (no subprocess)
 local function file_exists(path)
@@ -44,7 +48,8 @@ end
 -- The main function elephant will call
 function GetEntries()
 	local entries = {}
-	local user_theme_dir = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/themes"
+	local home_dir = os.getenv("HOME")
+	local user_theme_dir = home_dir .. "/.local/share/hyprland-ubuntu/themes"
 	local find_dir = user_theme_dir .. "/*/"
 	-- get all the directory in themes
 	local handle = io.popen('printf "%s\n" ' .. find_dir, "r")
@@ -53,7 +58,8 @@ function GetEntries()
 	end
 
 	for entry in handle:lines() do
-		local display_name = entry:match("([^/]+)/$"):gsub("%-", " ")
+		local theme_name = entry:match("([^/]+)/$")
+		local display_name = theme_name:gsub("%-", " ")
 		local preview_path = find_preview_path(entry)
 		display_name = display_name:gsub("(%a)([%w_']*)", function(first, rest)
 			return first:upper() .. rest:lower()
@@ -63,9 +69,13 @@ function GetEntries()
 			Text = display_name,
 			Preview = preview_path,
 			PreviewType = "file",
-			Actions = {
-				activate = "~/.local/share/hyprland-ubuntu/shell/set-theme.sh " .. " ",
-			},
+			Value = theme_name,
+			-- Actions = {
+			-- 	activate = home_dir .. "/.local/share/hyprland-ubuntu/shell/set-theme-background.sh " .. ShellEscape(
+			-- 		theme_name
+			-- 	),
+			-- },
+			SubMenu = "BackgroundSelectorForTheme",
 		})
 	end
 
@@ -73,4 +83,3 @@ function GetEntries()
 
 	return entries
 end
--- Check if file exists using Lua (no subprocess)

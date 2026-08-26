@@ -5,11 +5,11 @@ local waybar = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/waybar/shell/
 local functions = require("functions")
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "Open terminal" })
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser), { description = "Open browser" })
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(Terminal), { description = "Open terminal" })
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(Browser), { description = "Open browser" })
 hl.bind(mainMod .. " + W", hl.dsp.window.close(), { description = "Close active window" })
 
-hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager), { description = "Open file manager" })
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(FileManager), { description = "Open file manager" })
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating window" })
 -- "maximized" fills the monitor but respects reserved space (top bar stays visible)
 hl.bind(

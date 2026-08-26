@@ -4,6 +4,7 @@ keybind=""
 description=""
 while read -r line; do
     if [[ "$line" == *"modmask:"* ]]; then
+        # Delete up to modmask: get the the mod mask value
         modmask="${line##*"modmask: "}"
         split=([1]="Shift" [2]="Caps" [4]="Ctrl" [8]="Alt" [16]="NumLock" [32]="Mod3" [64]="Super" [128]="Mod5")
         for i in "${!split[@]}"; do

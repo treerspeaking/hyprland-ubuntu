@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mymenu — an Omarchy-style nested menu built on `walker --dmenu`
+# An Omarchy-style nested menu built on `walker --dmenu`
 
 set -uo pipefail
 
@@ -66,7 +66,7 @@ show_style() {
         "$BACK") in
     # these open Walker's own selectors rather than a dmenu list
     Theme) walker -m menus:omarchythemes --width 800 --minheight 400 ;;
-    Background) walker -m menus:omarchyBackgroundSelector --width 800 --minheight 400 ;;
+    Background) walker -m menus:BackgroundThemeSelector --maxheight 400 --minwidth 260 --maxwidth 260 ;;
     Back) show_main ;;
     esac
 }

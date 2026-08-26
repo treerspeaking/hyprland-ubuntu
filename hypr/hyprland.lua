@@ -29,10 +29,10 @@ require("monitors")
 ---------------------
 
 -- Set programs that you use
-terminal = "kitty"
-fileManager = "nautilus"
-appmenu = "walker"
-browser = "brave-browser"
+Terminal = "kitty"
+FileManager = "nautilus"
+Appmenu = "walker"
+Browser = "brave-browser"
 
 -------------------
 ---- AUTOSTART ----

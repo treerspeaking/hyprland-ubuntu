@@ -1,9 +1,11 @@
--- Modified from https://github.com/basecamp/omarchy/blob/v3.8.4/default/elephant/omarchy_background_selector.lua
--- This one is used to selecting the background after a theme has been select by BackgroundThemeSelector
+-- The naming is attrocious sorry
+-- This will be only called for the first time of themes
+-- after which it will be back to the normal background_them_selector
 
-Name = "omarchyBackgroundSelector"
+Name = "BackgroundSelectorForTheme"
 FixedOrder = true
-NamePretty = "Omarchy Background Selector"
+Parent = "omarchythemes"
+NamePretty = "Background Selector For Theme"
 Parent = "BackgroundThemeSelector"
 Cache = false
 HideFromProviderlist = true
@@ -31,7 +33,35 @@ function GetEntries()
 	local entries = {}
 	local home_dir = os.getenv("HOME")
 
-	local theme_name = lastMenuValue("BackgroundThemeSelector")
+	local current_background_file =
+		io.open(home_dir .. "/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/current-background.name")
+	local current_background_dir = current_background_file and current_background_file:read("*l") or nil
+	-- add back the home_dir cause background.name does not have absolute directory
+	current_background_dir = home_dir .. current_background_dir
+	local current_background = current_background_dir:match("([^/]+)$")
+	if current_background_file then
+		current_background_file:close()
+	end
+
+	table.insert(entries, {
+		Text = FormatName(current_background),
+		value = current_background_dir,
+		Actions = {
+			activate = home_dir .. "/.local/share/hyprland-ubuntu/shell/set-background.sh " .. ShellEscape(
+				current_background_dir
+			),
+		},
+		Preview = current_background_dir,
+		PreviewType = "file",
+	})
+
+	local theme_name = lastMenuValue("omarchythemes")
+	if theme_name ~= "" then
+		-- call the deffered execution from themes.lua
+		os.execute(
+			home_dir .. "/.local/share/hyprland-ubuntu/shell/set-theme-background.sh " .. ShellEscape(theme_name)
+		)
+	end
 
 	-- Directories to search
 	local dirs = {
@@ -39,7 +69,7 @@ function GetEntries()
 	}
 
 	-- Track added files to avoid duplicates
-	local seen = {}
+	local seen = { [current_background] = true }
 
 	for _, wallpaper_dir in ipairs(dirs) do
 		local handle = io.popen(

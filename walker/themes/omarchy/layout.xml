@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Modified from https://github.com/basecamp/omarchy/blob/v3.8.4/default/walker/themes/omarchy-default/layout.xml -->
 <interface>
   <requires lib="gtk" version="4.0"></requires>
   <object class="GtkWindow" id="Window">

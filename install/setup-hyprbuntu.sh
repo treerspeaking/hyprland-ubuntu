@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Modified from https://gitlab.com/kralos/hyprbuntu/-/blob/main/setup-hyprbuntu.sh?ref_type=heads
 
 set -e
 
@@ -663,11 +664,10 @@ fi
 
 bash "$SCRIPT_DIR/build-wiremix.sh"
 bash "$SCRIPT_DIR/install-btop.sh"
-# bash "$SCRIPT_DIR/build-bluetui.sh"
-#
+
 if [[ $KITTY_CONFIG_SETUP == "true" ]]; then
     line='include ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/kitty-theme.conf'
-    grep -qxF "$line" ~/.config/kitty/kitty.conf 2>/dev/null || printf '\n%s\n' "$line" >> ~/.config/kitty/kitty.conf
+    grep -qxF "$line" ~/.config/kitty/kitty.conf 2>/dev/null || printf '\n%s\n' "$line" >>~/.config/kitty/kitty.conf
 fi
 
 install_hyprwm_package hyprshutdown "@stable"
