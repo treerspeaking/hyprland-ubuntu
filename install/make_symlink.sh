@@ -41,4 +41,6 @@ fi
 
 ln -sfn "$HYPRLAND_UBUNTU_DIR/walker/service/walker.service" ~/.config/systemd/user/walker.service
 
-# if [[ -h "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme" ]]
+if [[ -e "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme/background-img" ]]; then
+    ln -sfn "$HYPRLAND_UBUNTU_DIR/themes/ristretto/backgrounds/3-industrial-moon.jpg" "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme/background-img"
+fi
