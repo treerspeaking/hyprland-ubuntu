@@ -86,34 +86,67 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, descrip
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Resize window" })
 
 -- Laptop multimedia keys for volume and LCD brightness
+-- Currently don't use
+-- hl.bind(
+-- 	"XF86AudioRaiseVolume",
+-- 	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+-- 	{ locked = true, repeating = true, description = "Raise volume" }
+-- )
+-- hl.bind(
+-- 	"XF86AudioLowerVolume",
+-- 	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+-- 	{ locked = true, repeating = true, description = "Lower volume" }
+-- )
+-- hl.bind(
+-- 	"XF86AudioMute",
+-- 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+-- 	{ locked = true, repeating = true, description = "Toggle mute" }
+-- )
+-- hl.bind(
+-- 	"XF86AudioMicMute",
+-- 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+-- 	{ locked = true, repeating = true, description = "Toggle microphone mute" }
+-- )
+-- hl.bind(
+-- 	"XF86MonBrightnessUp",
+-- 	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),
+-- 	{ locked = true, repeating = true, description = "Raise screen brightness" }
+-- )
+-- hl.bind(
+-- 	"XF86MonBrightnessDown",
+-- 	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),
+-- 	{ locked = true, repeating = true, description = "Lower screen brightness" }
+-- )
+
+local osd = [[swayosd-client --monitor "$(hyprctl monitors -j | jq -r '.[] | select(.focused == true).name')"]]
 hl.bind(
 	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+	hl.dsp.exec_cmd(osd .. " --output-volume raise --max-volume 100"),
 	{ locked = true, repeating = true, description = "Raise volume" }
 )
 hl.bind(
 	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+	hl.dsp.exec_cmd(osd .. " --output-volume lower"),
 	{ locked = true, repeating = true, description = "Lower volume" }
 )
 hl.bind(
 	"XF86AudioMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true, description = "Toggle mute" }
+	hl.dsp.exec_cmd(osd .. " --output-volume mute-toggle"),
+	{ locked = true, description = "Toggle mute" }
 )
 hl.bind(
 	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true, description = "Toggle microphone mute" }
+	hl.dsp.exec_cmd(osd .. " --input-volume mute-toggle"),
+	{ locked = true, description = "Toggle microphone mute" }
 )
 hl.bind(
 	"XF86MonBrightnessUp",
-	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),
+	hl.dsp.exec_cmd(osd .. " --brightness raise"),
 	{ locked = true, repeating = true, description = "Raise screen brightness" }
 )
 hl.bind(
 	"XF86MonBrightnessDown",
-	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),
+	hl.dsp.exec_cmd(osd .. " --brightness lower"),
 	{ locked = true, repeating = true, description = "Lower screen brightness" }
 )
 
