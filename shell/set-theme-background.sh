@@ -10,4 +10,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 kill -SIGUSR1 $(pgrep kitty)
 # reload hyprland
 hyprctl reload
-# killall -e waybar && uwsm-app -- waybar >/dev/null 2>&1 &
+# reload btop
+pkill -SIGUSR2 btop || true
+
+# reload mako
+makoctl reload || true
+# systemctl --user try-restart waybar

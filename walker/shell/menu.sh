@@ -76,8 +76,8 @@ show_system() {
         menu "System" \
             "󰂯  Bluetooth" \
             "󰕾  Volume" \
-            "󰍛  Btop"
-        "$BACK"
+            "󰍛  Btop" \
+            "$BACK"
     ) in
     Bluetooth) tui bluetui ;;
     Volume) tui wiremix ;;

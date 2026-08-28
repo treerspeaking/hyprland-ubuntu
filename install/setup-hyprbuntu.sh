@@ -665,11 +665,6 @@ fi
 bash "$SCRIPT_DIR/build-wiremix.sh"
 bash "$SCRIPT_DIR/install-btop.sh"
 
-if [[ $KITTY_CONFIG_SETUP == "true" ]]; then
-    line='include ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/kitty-theme.conf'
-    grep -qxF "$line" ~/.config/kitty/kitty.conf 2>/dev/null || printf '\n%s\n' "$line" >>~/.config/kitty/kitty.conf
-fi
-
 install_hyprwm_package hyprshutdown "@stable"
 
 if [[ $HYPRPAPER_SETUP == "true" ]]; then
@@ -1037,6 +1032,15 @@ fi
 sudo systemctl disable NetworkManager-wait-online.service
 sudo systemctl disable systemd-networkd-wait-online.service
 sudo systemctl mask systemd-networkd-wait-online.service
+
+if [[ $KITTY_CONFIG_SETUP == "true" ]]; then
+    line='include ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/kitty-theme.conf'
+    # Create the kitty config if it does not exist
+    mkdir -p "$HOME/.config/kitty"
+    if ! grep -qxF "$line" "$HOME/.config/kitty/kitty.conf" 2>/dev/null; then
+        printf '\n%s\n' "$line" >>~/.config/kitty/kitty.conf
+    fi
+fi
 
 cat <<EOF
 

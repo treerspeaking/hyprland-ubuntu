@@ -52,7 +52,7 @@
     "format": "<span font='omarchy'>󰍜</span>",
     "on-click": "~/.local/share/hyprland-ubuntu/walker/shell/menu.sh",
     "on-click-right": "xdg-terminal-exec",
-    "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space",
+    "tooltip-format": "Menu\n\nSuper + Alt + Space",
   },
   "custom/update": {
     "format": "",
