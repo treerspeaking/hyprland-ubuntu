@@ -92,7 +92,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-wifi",
+    "on-click": "~/.local/share/omarchy-ubuntu/wlctl/shell/launch-wlctl.sh",
   },
   "battery": {
     "format": "{capacity}% {icon}",

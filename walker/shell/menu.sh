@@ -80,7 +80,7 @@ show_system() {
             "󰍛  Btop" \
             "$BACK"
     ) in
-    Network) launch nm-connection-editor ;;
+    Network) tui wlctl ;;
     Bluetooth) tui bluetui ;;
     Volume) tui wiremix ;;
     Btop) tui btop ;;
