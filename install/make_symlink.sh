@@ -138,6 +138,6 @@ fi
 
 ln -sfn /usr/lib/systemd/user/xdg-desktop-portal-gtk.service ~/.config/systemd/user/graphical-session.target.wants/xdg-desktop-portal-gtk.service
 
-if [[ -e "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme/background-img" ]]; then
+if [[ ! -e "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme/background-img" ]]; then
     ln -sfn "$HYPRLAND_UBUNTU_DIR/themes/ristretto/backgrounds/3-industrial-moon.jpg" "$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/theme/background-img"
 fi
