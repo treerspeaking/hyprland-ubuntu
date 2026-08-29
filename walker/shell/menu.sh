@@ -74,11 +74,13 @@ show_style() {
 show_system() {
     case $(
         menu "System" \
+            "󰖩  Network" \
             "󰂯  Bluetooth" \
             "󰕾  Volume" \
             "󰍛  Btop" \
             "$BACK"
     ) in
+    Network) launch nm-connection-editor ;;
     Bluetooth) tui bluetui ;;
     Volume) tui wiremix ;;
     Btop) tui btop ;;

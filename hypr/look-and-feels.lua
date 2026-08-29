@@ -200,3 +200,14 @@ hl.window_rule({
 	center = true,
 	size = { 875, 600 },
 })
+
+-- Temporary until i learn quickshell or impala support network manager
+hl.window_rule({
+	name = "network editor",
+	match = {
+		class = "nm-connection-editor",
+	},
+	float = true,
+	center = true,
+	size = { 875, 600 },
+})

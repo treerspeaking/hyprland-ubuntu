@@ -302,7 +302,8 @@ apt_install \
     ninja-build \
     pkg-config \
     gcc-16 \
-    g++-16
+    g++-16 \
+    curl
 
 apt_install \
     fontconfig \

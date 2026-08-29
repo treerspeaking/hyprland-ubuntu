@@ -5,3 +5,9 @@ current-hyprland-ubuntu/theme/background-img
 current-hyprland-ubuntu/tmp
 btop/themes/current.theme
 mako/config
+
+# VM test rig artifacts (images live outside the repo)
+# Not ready yet
+test 
+test/vm/*.log
+test/vm/.last-run

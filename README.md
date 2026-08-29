@@ -1,5 +1,11 @@
 This is my Hyprland config which use Omarchy's theme without installing omarchy
 
+# Install
+
+```bash
+git clone https://github.com/treerspeaking/hyprland-ubuntu ~/.local/share/hyprland-ubuntu
+```
+
 # Credits
 
 [Omarchy](https://github.com/basecamp/omarchy/tree/quattro/themes)
