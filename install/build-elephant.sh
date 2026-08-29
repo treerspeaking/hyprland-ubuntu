@@ -7,8 +7,8 @@ set -e
 
 BUILD_DIR="${BUILD_DIR:-$HOME/hyprbuntu}"
 
-HYPRLAND_UBUNTU_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PROVIDER_DIR="$HYPRLAND_UBUNTU_DIR/elephant/providers"
+OMARCHY_UBUNTU_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROVIDER_DIR="$OMARCHY_UBUNTU_DIR/elephant/providers"
 
 # Providers to build alongside the core service. Add/remove names from
 # internal/providers/ in https://github.com/abenz1267/elephant as needed

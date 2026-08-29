@@ -50,7 +50,7 @@
   },
   "custom/omarchy": {
     "format": "<span font='omarchy'>󰍜</span>",
-    "on-click": "~/.local/share/hyprland-ubuntu/walker/shell/menu.sh",
+    "on-click": "~/.local/share/omarchy-ubuntu/walker/shell/menu.sh",
     "on-click-right": "xdg-terminal-exec",
     "tooltip-format": "Menu\n\nSuper + Alt + Space",
   },
@@ -66,7 +66,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "~/.local/share/hyprland-ubuntu/btop/shell/launch-btop.sh",
+    "on-click": "~/.local/share/omarchy-ubuntu/btop/shell/launch-btop.sh",
   },
   "clock": {
     "format": "{:L%A %H:%M}",
@@ -121,11 +121,11 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "~/.local/share/hyprland-ubuntu/bluetui/shell/launch-bluetui.sh",
+    "on-click": "~/.local/share/omarchy-ubuntu/bluetui/shell/launch-bluetui.sh",
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "~/.local/share/hyprland-ubuntu/wiremix/shell/launch-wiremix.sh",
+    "on-click": "~/.local/share/omarchy-ubuntu/wiremix/shell/launch-wiremix.sh",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,

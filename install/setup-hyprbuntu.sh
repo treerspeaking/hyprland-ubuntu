@@ -19,7 +19,7 @@ set -e
 # TUIGREET_SETUP=true|false - whether to set up tuigreet as the login manager
 # WALKER_SETUP=true|false - whether to build walker + elephant (app launcher)
 # WAYBAR_SETUP=true|false - whether to install (minimal config) waybar as the status bar
-# KITTY_CONFIG_SETUP=true|false - whether to add include ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/kitty-theme.conf
+# KITTY_CONFIG_SETUP=true|false - whether to add include ~/.local/share/omarchy-ubuntu/current-omarchy-ubuntu/theme/kitty-theme.conf
 
 BUILD_DIR="$HOME/hyprbuntu"
 DISABLE_CONFIRM=false
@@ -1035,7 +1035,7 @@ sudo systemctl disable systemd-networkd-wait-online.service
 sudo systemctl mask systemd-networkd-wait-online.service
 
 if [[ $KITTY_CONFIG_SETUP == "true" ]]; then
-    line='include ~/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/kitty-theme.conf'
+    line='include ~/.local/share/omarchy-ubuntu/current-omarchy-ubuntu/theme/kitty-theme.conf'
     # Create the kitty config if it does not exist
     mkdir -p "$HOME/.config/kitty"
     if ! grep -qxF "$line" "$HOME/.config/kitty/kitty.conf" 2>/dev/null; then

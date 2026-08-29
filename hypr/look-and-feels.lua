@@ -1,4 +1,4 @@
-local colors = require("../current-hyprland-ubuntu/theme/colors")
+local colors = require("../current-omarchy-ubuntu/theme/colors")
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 -- WORKAROUND (added 2026-08-02) -- remove once Hyprland/aquamarine or the NVIDIA

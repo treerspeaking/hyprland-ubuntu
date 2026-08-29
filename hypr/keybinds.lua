@@ -1,7 +1,7 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
--- local menu = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/menu.sh"
-local walker = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/walker/shell/"
-local waybar = os.getenv("HOME") .. "/.local/share/hyprland-ubuntu/waybar/shell/"
+-- local menu = os.getenv("HOME") .. "/.local/share/omarchy-ubuntu/walker/menu.sh"
+local walker = os.getenv("HOME") .. "/.local/share/omarchy-ubuntu/walker/shell/"
+local waybar = os.getenv("HOME") .. "/.local/share/omarchy-ubuntu/waybar/shell/"
 local functions = require("functions")
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more

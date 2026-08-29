@@ -34,7 +34,7 @@ function GetEntries()
 	local home_dir = os.getenv("HOME")
 
 	local current_background_file =
-		io.open(home_dir .. "/.local/share/hyprland-ubuntu/current-hyprland-ubuntu/theme/current-background.name")
+		io.open(home_dir .. "/.local/share/omarchy-ubuntu/current-omarchy-ubuntu/theme/current-background.name")
 	local current_background_dir = current_background_file and current_background_file:read("*l") or nil
 	-- add back the home_dir cause background.name does not have absolute directory
 	current_background_dir = home_dir .. current_background_dir
@@ -47,7 +47,7 @@ function GetEntries()
 		Text = FormatName(current_background),
 		value = current_background_dir,
 		Actions = {
-			activate = home_dir .. "/.local/share/hyprland-ubuntu/shell/set-background.sh " .. ShellEscape(
+			activate = home_dir .. "/.local/share/omarchy-ubuntu/shell/set-background.sh " .. ShellEscape(
 				current_background_dir
 			),
 		},
@@ -59,13 +59,13 @@ function GetEntries()
 	if theme_name ~= "" then
 		-- call the deffered execution from themes.lua
 		os.execute(
-			home_dir .. "/.local/share/hyprland-ubuntu/shell/set-theme-background.sh " .. ShellEscape(theme_name)
+			home_dir .. "/.local/share/omarchy-ubuntu/shell/set-theme-background.sh " .. ShellEscape(theme_name)
 		)
 	end
 
 	-- Directories to search
 	local dirs = {
-		home_dir .. "/.local/share/hyprland-ubuntu/themes/" .. theme_name .. "/backgrounds",
+		home_dir .. "/.local/share/omarchy-ubuntu/themes/" .. theme_name .. "/backgrounds",
 	}
 
 	-- Track added files to avoid duplicates
@@ -87,7 +87,7 @@ function GetEntries()
 						Value = background,
 						Actions = {
 							activate = home_dir
-								.. "/.local/share/hyprland-ubuntu/shell/set-background.sh "
+								.. "/.local/share/omarchy-ubuntu/shell/set-background.sh "
 								.. ShellEscape(background),
 						},
 						Preview = background,

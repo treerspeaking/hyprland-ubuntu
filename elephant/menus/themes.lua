@@ -49,7 +49,7 @@ end
 function GetEntries()
 	local entries = {}
 	local home_dir = os.getenv("HOME")
-	local user_theme_dir = home_dir .. "/.local/share/hyprland-ubuntu/themes"
+	local user_theme_dir = home_dir .. "/.local/share/omarchy-ubuntu/themes"
 	local find_dir = user_theme_dir .. "/*/"
 	-- get all the directory in themes
 	local handle = io.popen('printf "%s\n" ' .. find_dir, "r")
@@ -71,7 +71,7 @@ function GetEntries()
 			PreviewType = "file",
 			Value = theme_name,
 			-- Actions = {
-			-- 	activate = home_dir .. "/.local/share/hyprland-ubuntu/shell/set-theme-background.sh " .. ShellEscape(
+			-- 	activate = home_dir .. "/.local/share/omarchy-ubuntu/shell/set-theme-background.sh " .. ShellEscape(
 			-- 		theme_name
 			-- 	),
 			-- },

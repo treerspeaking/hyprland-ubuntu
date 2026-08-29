@@ -35,7 +35,7 @@ function GetEntries()
 
 	-- Directories to search
 	local dirs = {
-		home_dir .. "/.local/share/hyprland-ubuntu/themes/" .. theme_name .. "/backgrounds",
+		home_dir .. "/.local/share/omarchy-ubuntu/themes/" .. theme_name .. "/backgrounds",
 	}
 
 	-- Track added files to avoid duplicates
@@ -57,7 +57,7 @@ function GetEntries()
 						Value = background,
 						Actions = {
 							activate = home_dir
-								.. "/.local/share/hyprland-ubuntu/shell/set-background.sh "
+								.. "/.local/share/omarchy-ubuntu/shell/set-background.sh "
 								.. ShellEscape(background),
 						},
 						Preview = background,

@@ -1,5 +1,5 @@
 /* modified from https://github.com/basecamp/omarchy/blob/v3.8.4/config/waybar/style.css */
-@import "../current-hyprland-ubuntu/theme/waybar.css";
+@import "../current-omarchy-ubuntu/theme/waybar.css";
 
 * {
   background-color: @background;

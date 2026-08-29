@@ -1,8 +1,8 @@
 elephant/providers
 *.so
 current
-current-hyprland-ubuntu/theme/background-img
-current-hyprland-ubuntu/tmp
+current-omarchy-ubuntu/theme/background-img
+current-omarchy-ubuntu/tmp
 btop/themes/current.theme
 mako/config
 

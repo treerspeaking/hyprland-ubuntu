@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-HYPRLAND_UBUNTU_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
-TEMP_DIR="$HYPRLAND_UBUNTU_DIR/current-hyprland-ubuntu/tmp"
+OMARCHY_UBUNTU_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../ && pwd)
+TEMP_DIR="$OMARCHY_UBUNTU_DIR/current-omarchy-ubuntu/tmp"
 THEME_NAME="$1"
-THEME_DIR="$HYPRLAND_UBUNTU_DIR/themes/$THEME_NAME"
+THEME_DIR="$OMARCHY_UBUNTU_DIR/themes/$THEME_NAME"
 
 if [[ ! -f "$THEME_DIR/colors.toml" ]]; then
     echo "set-theme.sh: no such theme '$THEME_NAME'" >&2

@@ -1,5 +1,5 @@
 /* Modified from https://github.com/basecamp/omarchy/blob/v3.8.4/default/walker/themes/omarchy-default/style.css */
-@import "../../../current-hyprland-ubuntu/theme/walker.css";
+@import "../../../current-omarchy-ubuntu/theme/walker.css";
 
 * {
   all: unset;

@@ -9,7 +9,7 @@ SearchName = true
 function GetEntries()
 	local entries = {}
 	local home_dir = os.getenv("HOME")
-	local find_dir = home_dir .. "/.local/share/hyprland-ubuntu/themes/*/"
+	local find_dir = home_dir .. "/.local/share/omarchy-ubuntu/themes/*/"
 	local handle = io.popen('printf "%s\n" ' .. find_dir, "r")
 	if not handle then
 		return
