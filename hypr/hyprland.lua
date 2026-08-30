@@ -31,8 +31,8 @@ require("monitors")
 -- Set programs that you use
 Terminal = "kitty"
 FileManager = "nautilus"
-Appmenu = "walker"
 Browser = "brave-browser"
+Appmenu = "walker"
 
 -------------------
 ---- AUTOSTART ----
