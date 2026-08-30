@@ -11,3 +11,4 @@ mako/config
 test 
 test/vm/*.log
 test/vm/.last-run
+install/ubuntu-26.04

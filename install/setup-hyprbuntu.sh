@@ -693,7 +693,7 @@ if [[ "$HYPRIDLE_SETUP" == "true" ]] && [[ "$HYPRLOCK_SETUP" == "true" ]]; then
 general {
   lock_cmd = pidof hyprlock || hyprlock
   before_sleep_cmd = loginctl lock-session
-  after_sleep_cmd = hyprctl dispatch dpms on
+  after_sleep_cmd = hyprctl dispatch 'hl.dsp.dpms({action = "on"})'
 }
 
 listener {
@@ -709,8 +709,8 @@ listener {
 
 listener {
   timeout = 350
-  on-timeout = hyprctl dispatch dpms off
-  on-resume = hyprctl dispatch dpms on
+  on-timeout = hyprctl dispatch 'hl.dsp.dpms({action = "off"})'
+  on-resume = hyprctl dispatch 'hl.dsp.dpms({action = "on"})'
 }
 
 EOF
@@ -871,7 +871,7 @@ if [[ $WAYBAR_SETUP == "true" ]]; then
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "on-click": "pidof wlctl >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e wlctl\""
+        "on-click": "pidof wlctl >/dev/null || hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty -e wlctl\", { float = true, center = true, size = \"(monitor_w*0.9) (monitor_h*0.9)\" })'"
     },
 EOF
         )
@@ -888,7 +888,7 @@ EOF
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "on-click": "pidof nmtui >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e nmtui\""
+        "on-click": "pidof nmtui >/dev/null || hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty -e nmtui\", { float = true, center = true, size = \"(monitor_w*0.9) (monitor_h*0.9)\" })'"
     },
 EOF
         )
@@ -902,7 +902,7 @@ EOF
     "bluetooth": {
         "format": " {status}",
         "format-connected": " {device_alias}",
-        "on-click": "pidof bluetui >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e bluetui\""
+        "on-click": "pidof bluetui >/dev/null || hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty -e bluetui\", { float = true, center = true, size = \"(monitor_w*0.9) (monitor_h*0.9)\" })'"
     },
 EOF
         )
@@ -968,7 +968,7 @@ EOF
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pidof wiremix >/dev/null || hyprctl dispatch exec \"[float; size (monitor_w*0.9) (monitor_h*0.9); center] kitty -e wiremix\""
+        "on-click": "pidof wiremix >/dev/null || hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty -e wiremix\", { float = true, center = true, size = \"(monitor_w*0.9) (monitor_h*0.9)\" })'"
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
