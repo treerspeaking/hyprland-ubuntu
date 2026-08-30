@@ -501,6 +501,69 @@ has_battery() {
     return 1 # false
 }
 
+# Move this up so wayland will be build before hyprland
+# libre2 needs to be built from source as 26.04's libre2-dev package is too old (checked 2026-02-19)
+# we should try checking apt again later by replacing this block with libre2-dev in the Hyprland deps below
+echo "------------------------------------------------"
+echo "Installing re2 from source..."
+echo "------------------------------------------------"
+# re2's find_package(absl) needs libabsl-dev. It used to arrive as one of hyprwire's
+# apt deps, but this block now runs before any hyprwm package is built.
+apt_install libabsl-dev
+mkdir -p "$BUILD_DIR/re2"
+(
+    cd "$BUILD_DIR/re2"
+    if [ ! -d .git ]; then
+        git clone https://github.com/google/re2.git .
+    fi
+    git fetch
+    git checkout $(git tag | sort -n | tail -1)
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_STANDARD=20 -DBUILD_SHARED_LIBS=ON -B build
+    cmake --build build -j $(nproc)
+    sudo cmake --install build
+)
+
+# wayland (core) needs to be built from source as 26.04's wayland-scanner (1.24.0) has
+# a stale built-in protocol DTD, and wayland-protocols' own build uses --strict, which
+# turns that DTD mismatch into a hard build failure (checked 2026-07-21)
+echo "------------------------------------------------"
+echo "Installing wayland from source..."
+echo "------------------------------------------------"
+mkdir -p "$BUILD_DIR/wayland"
+(
+    cd "$BUILD_DIR/wayland"
+    if [ ! -d .git ]; then
+        git clone https://gitlab.freedesktop.org/wayland/wayland.git .
+    fi
+    git fetch
+    git checkout $(git tag | sort -V | tail -1)
+    rm -rf build
+    apt_install meson ninja-build libexpat1-dev libffi-dev libxml2-dev
+    meson setup build --prefix=/usr/local -Dtests=false -Ddocumentation=false
+    ninja -C build
+    sudo ninja -C build install
+)
+
+# wayland-protocols needs to be built from source as 26.04's wayland-protocols package is too old (checked 2026-07-21)
+# we should try checking apt again later by replacing this block with wayland-protocols in the Hyprland deps below
+echo "------------------------------------------------"
+echo "Installing wayland-protocols from source..."
+echo "------------------------------------------------"
+mkdir -p "$BUILD_DIR/wayland-protocols"
+(
+    cd "$BUILD_DIR/wayland-protocols"
+    if [ ! -d .git ]; then
+        git clone https://gitlab.freedesktop.org/wayland/wayland-protocols.git .
+    fi
+    git fetch
+    git checkout $(git tag | sort -V | tail -1)
+    rm -rf build
+    apt_install meson ninja-build
+    meson setup build --prefix=/usr/local -Dtests=false
+    ninja -C build
+    sudo ninja -C build install
+)
+
 # From the original hyprbuntu script, write rewrite to use the official github repo install
 # apt_install \
 #     libclang-dev \
@@ -574,65 +637,6 @@ if [ ! -f "$XDG_CONFIG_HOME/xdg-desktop-portal/portals.conf" ]; then
 default=hyprland;gtk
 EOF
 fi
-
-# libre2 needs to be built from source as 26.04's libre2-dev package is too old (checked 2026-02-19)
-# we should try checking apt again later by replacing this block with libre2-dev in the Hyprland deps below
-echo "------------------------------------------------"
-echo "Installing re2 from source..."
-echo "------------------------------------------------"
-mkdir -p "$BUILD_DIR/re2"
-(
-    cd "$BUILD_DIR/re2"
-    if [ ! -d .git ]; then
-        git clone https://github.com/google/re2.git .
-    fi
-    git fetch
-    git checkout $(git tag | sort -n | tail -1)
-    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_STANDARD=20 -DBUILD_SHARED_LIBS=ON -B build
-    cmake --build build -j $(nproc)
-    sudo cmake --install build
-)
-
-# wayland (core) needs to be built from source as 26.04's wayland-scanner (1.24.0) has
-# a stale built-in protocol DTD, and wayland-protocols' own build uses --strict, which
-# turns that DTD mismatch into a hard build failure (checked 2026-07-21)
-echo "------------------------------------------------"
-echo "Installing wayland from source..."
-echo "------------------------------------------------"
-mkdir -p "$BUILD_DIR/wayland"
-(
-    cd "$BUILD_DIR/wayland"
-    if [ ! -d .git ]; then
-        git clone https://gitlab.freedesktop.org/wayland/wayland.git .
-    fi
-    git fetch
-    git checkout $(git tag | sort -V | tail -1)
-    rm -rf build
-    apt_install meson ninja-build libexpat1-dev libffi-dev libxml2-dev
-    meson setup build --prefix=/usr/local -Dtests=false -Ddocumentation=false
-    ninja -C build
-    sudo ninja -C build install
-)
-
-# wayland-protocols needs to be built from source as 26.04's wayland-protocols package is too old (checked 2026-07-21)
-# we should try checking apt again later by replacing this block with wayland-protocols in the Hyprland deps below
-echo "------------------------------------------------"
-echo "Installing wayland-protocols from source..."
-echo "------------------------------------------------"
-mkdir -p "$BUILD_DIR/wayland-protocols"
-(
-    cd "$BUILD_DIR/wayland-protocols"
-    if [ ! -d .git ]; then
-        git clone https://gitlab.freedesktop.org/wayland/wayland-protocols.git .
-    fi
-    git fetch
-    git checkout $(git tag | sort -V | tail -1)
-    rm -rf build
-    apt_install meson ninja-build
-    meson setup build --prefix=/usr/local -Dtests=false
-    ninja -C build
-    sudo ninja -C build install
-)
 
 CC=gcc-16 CXX=g++-16 install_hyprwm_package Hyprland "@stable" \
     glslang-dev \
