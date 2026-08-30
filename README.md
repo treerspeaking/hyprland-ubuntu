@@ -1,6 +1,6 @@
 This is my opinionated Hyprland config which use Omarchy's theme.
 
-[![Demo](https://img.youtube.com/vi/GircxUAIvZU/maxresdefault.jpg)](https://www.youtube.com/watch?v=GircxUAIvZU)
+[Demo](https://github.com/user-attachments/assets/f771d6ec-e105-429f-9dc5-c2b711b4589c)
 
 # Install
 
