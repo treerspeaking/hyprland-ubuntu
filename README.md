@@ -107,7 +107,8 @@ Some of the most important shortcut
 
 # Credits
 
-[Omarchy](https://github.com/basecamp/omarchy/tree/quattro/themes)
+[Omarchy](https://github.com/basecamp/omarchy)
+[kralos/hyprbuntu](https://gitlab.com/kralos/hyprbuntu)
 
 # License
 
