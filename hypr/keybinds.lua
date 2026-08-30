@@ -34,7 +34,7 @@ hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.exec_cmd(waybar .. "toggle.sh"))
 -- menu
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(walker .. "appmenu.sh"), { description = "Open app launcher" })
 hl.bind(mainMod .. " + ALT + SPACE", hl.dsp.exec_cmd(walker .. "/menu.sh"), { description = "Open menu" })
-hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(walker .. "/show-keybinds.sh"), { description = "Open menu" })
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(walker .. "/show-keybinds.sh"), { description = "Show keybinds" })
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo(), { description = "Toggle pseudotiling" })
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"), { description = "Toggle split direction" }) -- dwindle onl
 -- Move focus with mainMod + arrow keys
